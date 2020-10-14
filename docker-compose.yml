@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    nodedev:
+        build:
+            context: ./node
+            args:
+                NODE_DOCKER_TAG: $NODE_DOCKER_TAG
+        tty: true
+        volumes:
+            - ./app:/usr/src/app
+        working_dir: /usr/src/app
+
+    sbtdev:
+        build :
+            context: ./sbt
+            args:
+                OPENJDK_TAG: $OPENJDK_TAG 
+                SBT_VERSION: $SBT_VERSION
+                SCALA_VERSION: $SCALA_VERSION
+        tty: true
+        volumes:
+            - ./app:/root/app
+            - ./.ivy2:/root/.ivy2
+            - ./.cache:/root/.cache
+            - ./.sbt:/root/.sbt
+        working_dir: /root/app
